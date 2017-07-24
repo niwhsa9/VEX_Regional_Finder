@@ -9,11 +9,12 @@ import sys
 SEASON = "In+The+Zone"			#manualy generate mailing list from VexForum
 REGION = sys.argv[1] 			#cron job w/ cmd line input
 GMAIL = "postmaster.smash@gmail.com"
-PASSWORD = "[redacted]"
+PASSWORD = "[redacted["
 RECIPIENT = "niwhsa9@gmail.com"
 TOURNAMENT_FILE = "tournaments.log" 
 RECIPIENT_FILE = "maillist.log"
 # DON'T MODIFY HERE DOWN- ----------------------
+#print(REGION)
 s = socket(AF_INET, SOCK_STREAM)
 s.connect(("api.vexdb.io", 80))
 t = """GET http://api.vexdb.io/v1/get_events?region={region}&season={season} HTTP/1.1
@@ -25,7 +26,7 @@ stime=time.time()
 s.setblocking(0)
 s.send(t)
 while(True):
-	if(time.time()-stime >= 1.25):
+	if(time.time()-stime >= 0.5):
         	break
 	try:
 		t=s.recv(1024)
@@ -34,7 +35,6 @@ while(True):
 	except:
 		pass
 nohead=response[response.find('{'):]
-#print(nohead)
 data = json.loads(nohead)
 name=[]
 date=[]
