@@ -9,10 +9,11 @@ import sys
 SEASON = "In+The+Zone"			#manualy generate mailing list from VexForum
 REGION = sys.argv[1] 			#cron job w/ cmd line input
 GMAIL = "postmaster.smash@gmail.com"
-PASSWORD = "[redacted["
+PASSWORD = "[redacted]"
 RECIPIENT = "niwhsa9@gmail.com"
 TOURNAMENT_FILE = "tournaments.log" 
 RECIPIENT_FILE = "maillist.log"
+COUNTRY = "United+States"
 # DON'T MODIFY HERE DOWN- ----------------------
 #print(REGION)
 s = socket(AF_INET, SOCK_STREAM)
@@ -21,6 +22,13 @@ t = """GET http://api.vexdb.io/v1/get_events?region={region}&season={season} HTT
 Host: api.vexdb.io
 
 """.format(region=REGION, season=SEASON)
+if(REGION == "Puerto+Rico"):  #TEMPORARY, FIX ME
+	t = '''GET http://api.vexdb.io/v1/get_events?country={region}&season={season} HTTP/1.1
+Host: api.vexdb.io
+
+'''.format(region=REGION, season=SEASON)
+	print(t)
+	
 response = ""
 stime=time.time()
 s.setblocking(0)
@@ -35,6 +43,8 @@ while(True):
 	except:
 		pass
 nohead=response[response.find('{'):]
+#if(REGION == "Puerto+Rico"):
+	#print(nohead)
 data = json.loads(nohead)
 name=[]
 date=[]
@@ -67,7 +77,7 @@ if(len(newtournaments)>0):
 	
 	file = open(RECIPIENT_FILE, "r")
 	list = file.read().split("\n")
-	#print(list)
+	print(list)
 	#REGION.replace(' ', '_')
 	for user in list:
 		if(REGION not in user):
