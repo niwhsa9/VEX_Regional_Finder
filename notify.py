@@ -22,12 +22,12 @@ t = """GET http://api.vexdb.io/v1/get_events?region={region}&season={season} HTT
 Host: api.vexdb.io
 
 """.format(region=REGION, season=SEASON)
-if(REGION == "Puerto+Rico"):  #TEMPORARY, FIX ME
+if(REGION == "Puerto+Rico" or REGION == "United+Kingdom"):  #TEMPORARY, FIX ME
 	t = '''GET http://api.vexdb.io/v1/get_events?country={region}&season={season} HTTP/1.1
 Host: api.vexdb.io
 
 '''.format(region=REGION, season=SEASON)
-	print(t)
+	#print(t)
 	
 response = ""
 stime=time.time()
@@ -43,6 +43,7 @@ while(True):
 	except:
 		pass
 nohead=response[response.find('{'):]
+#print(nohead)
 #if(REGION == "Puerto+Rico"):
 	#print(nohead)
 data = json.loads(nohead)
