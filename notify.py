@@ -50,11 +50,12 @@ data = json.loads(nohead)
 name=[]
 date=[]
 loc=[]
+sku=[]
 for i in range(0, len(data["result"])):	
 	name.append(data["result"][i]["name"])
 	date.append(data["result"][i]["start"]) 
 	loc.append(data["result"][i]["loc_city"])
-
+	sku.append(data["result"][i]["sku"]) #latest
 
 file = open(TOURNAMENT_FILE, "a+")
 prev = file.read().split("\r\n")
@@ -93,9 +94,9 @@ if(len(newtournaments)>0):
 		] #optimize, don't generate a new msg every time
 
 		for i in newtournaments:
-			readable.append(name[i] + " " + date[i] + " " + loc[i]);
+			readable.append(name[i] + " " + date[i] + " " + loc[i] + "\nhttps://www.robotevents.com/robot-competitions/vex-robotics-competition/" + sku[i] + ".html\n");
 
-		msg = "\r\n".join(readable)
+		msg = "\r\n".join(readable) #"\r\n"
 		#print(msg)
 		server.sendmail(GMAIL, RECIPIENT, msg)
 	
