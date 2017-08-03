@@ -9,7 +9,7 @@ import sys
 SEASON = "In+The+Zone"			#manualy generate mailing list from VexForum
 REGION = sys.argv[1] 			#cron job w/ cmd line input
 GMAIL = "postmaster.smash@gmail.com"
-PASSWORD = "[redacted]"
+PASSWORD = "[redcated]"
 RECIPIENT = "niwhsa9@gmail.com"
 TOURNAMENT_FILE = "tournaments.log" 
 RECIPIENT_FILE = "maillist.log"
@@ -42,7 +42,7 @@ while(True):
 
 	except:
 		pass
-nohead=response[response.find('{'):]
+nohead=response[response.find('{'):response.rfind('}')+1]
 #print(nohead)
 #if(REGION == "Puerto+Rico"):
 	#print(nohead)
